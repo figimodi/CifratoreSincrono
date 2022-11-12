@@ -1,0 +1,78 @@
+﻿<Window x:Class="CifraturaSincrona.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CifraturaSincrona"
+        mc:Ignorable="d"
+        Title="CifraDecifra" Height="680" Width="800" ResizeMode="NoResize" Icon="personal_icon.ico" WindowStartupLocation="CenterScreen">
+    <Grid Background="#FF7E7B83">
+        <Rectangle x:Name="Grid1" Fill="#FFECECEC" HorizontalAlignment="Center" Height="200" Margin="0,76,0,0" Stroke="Black" VerticalAlignment="Top" Width="750" StrokeThickness="0"/>
+        <Button x:Name="btnPlainFile" Content="esplora..." HorizontalAlignment="Right" Margin="0,130,90,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Corbel Light" FontSize="15" Click="Esplora" Background="#7F000000" Foreground="White"/>
+        <Button x:Name="btnAvvia" Content="avvia" HorizontalAlignment="Right" Margin="0,190,90,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Corbel Light" FontSize="15" Background="#7F000000" Foreground="White" Click="Avvia"/>
+        <TextBox x:Name="txtPlainFile" HorizontalAlignment="Center" Height="25" Margin="0,130,30,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420" FontFamily="Corbel Light" FontSize="15" VerticalContentAlignment="Center" BorderBrush="#FFB6B6B6" GotFocus="txtGotFocus" TextChanged="TextChanged"/>
+        <TextBox x:Name="txtCipherFile" HorizontalAlignment="Center" Height="25" Margin="0,160,30,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420" FontFamily="Corbel Light" FontSize="15" VerticalContentAlignment="Center" BorderBrush="#FFB6B6B6" />
+        <TextBox x:Name="txtPassword" HorizontalAlignment="Center" Height="25" Margin="0,190,30,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420" FontFamily="Corbel Light" FontSize="15" VerticalContentAlignment="Center" BorderBrush="#FFB6B6B6"  KeyDown="Invio" Visibility="Hidden"/>
+        <PasswordBox x:Name="pswPassword" HorizontalAlignment="Center" Height="25" Margin="0,190,30,0" VerticalAlignment="Top" Width="420" FontFamily="Corbel Light" FontSize="15" VerticalContentAlignment="Center" BorderBrush="#FFB6B6B6" KeyDown="Invio" />
+        <Button x:Name="btnShowPassword" HorizontalAlignment="Right" Margin="0,195,210,0" VerticalAlignment="Top" Width="25" Height="15" FontFamily="Corbel Light" Click="ShowPassword" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="eye.png"/>
+            </Button.Background>
+            <Button.Style>
+                <Style>
+                    <Setter Property="Button.Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                    <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <Label x:Name="lblFileIn" Content="File da cifrare" HorizontalAlignment="Left" Margin="80,130,0,0" VerticalAlignment="Top" Width="80" Padding="0,5" Height="25"  HorizontalContentAlignment="Right" FontFamily="Corbel Light" FontSize="14" Foreground="Red"/>
+        <Label x:Name="lblFileOut" Content="File cifrato" HorizontalAlignment="Left" Margin="80,160,0,0" VerticalAlignment="Top" Width="80" Padding="0,5" Height="25" HorizontalContentAlignment="Right" FontFamily="Corbel Light" FontSize="14" Foreground="Red"/>
+        <Label x:Name="lblPassword" Content="Password" HorizontalAlignment="Left" Margin="80,190,0,0" VerticalAlignment="Top" Width="80" Padding="0,5" Height="25" HorizontalContentAlignment="Right" FontFamily="Corbel Light" FontSize="14" Foreground="Red"/>
+
+        <Label x:Name="lblHeader1" Content="Cifra un file" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,90,0,0" Height="40" Width="200" FontSize="25" HorizontalContentAlignment="Center" Foreground="Green" FontFamily="Corbel Light"/>
+        <Label x:Name="lblError1" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,230,0,0" Height="30" Width="600" FontSize="16" HorizontalContentAlignment="Center" Foreground="#FF7B8511" FontFamily="Corbel Light"/>
+
+        <Rectangle x:Name="Grid2" Fill="#FFECECEC" HorizontalAlignment="Center" Height="345" Margin="0,0,0,16" Stroke="Black" VerticalAlignment="Bottom" Width="750" StrokeThickness="0"/>
+        <Label x:Name="lblHeader2" Content="Cifra un testo" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,305,0,0" Height="40" Width="200" FontSize="25" HorizontalContentAlignment="Center" Foreground="Green" FontFamily="Corbel Light"/>
+        <TextBox x:Name="txtPlainText" HorizontalAlignment="Left" Height="180" Margin="50,385,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="345" FontFamily="Corbel Light" FontSize="15" VerticalContentAlignment="Top" BorderBrush="#FFB6B6B6" GotFocus="txtGotFocus" Padding="10" KeyDown="Invio2"/>
+        <TextBox x:Name="txtCipherText" HorizontalAlignment="Right" Height="180" Margin="0,385,50,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="345" FontFamily="Corbel Light" FontSize="15" VerticalContentAlignment="Top" BorderBrush="#FFB6B6B6"  Padding="10" IsReadOnly="True"/>
+        <ComboBox x:Name="cmbCrittografia" HorizontalAlignment="Left" VerticalAlignment="Top" Width="170" Margin="225,25,0,0" Height="30" SelectedIndex="0" FontFamily="Corbel Light" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DarkBlue">
+            <ComboBoxItem>DES</ComboBoxItem>
+            <ComboBoxItem>Triple DES</ComboBoxItem>
+            <ComboBoxItem>AES</ComboBoxItem>
+        </ComboBox>
+        <Button x:Name="btnCifraDecifra" Content="Decifra" HorizontalAlignment="Left" Margin="400,25,0,0" VerticalAlignment="Top" Width="170" Height="30" FontSize="15" FontFamily="Corbel Light" Foreground="DarkBlue" Background="#FFE4E4E4" BorderBrush="{x:Null}" BorderThickness="0" Click="CifraDecifra"/>
+
+        <Label x:Name="lblError2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,580,0,0" Height="30" Width="600" FontSize="16" HorizontalContentAlignment="Center" Foreground="#FF7B8511" FontFamily="Corbel Light"/>
+        <Button x:Name="btnAvvia2" Content="avvia" HorizontalAlignment="Right" Margin="0,350,90,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Corbel Light" FontSize="15" Background="#7F000000" Foreground="White" Click="Avvia2"/>
+        <Label x:Name="lblPassword2" Content="Password" HorizontalAlignment="Left" Margin="80,350,0,0" VerticalAlignment="Top" Width="80" Padding="0,5" Height="25" HorizontalContentAlignment="Right" FontFamily="Corbel Light" FontSize="14" Foreground="Red"/>
+        <TextBox x:Name="txtPassword2" HorizontalAlignment="Center" Height="25" Margin="0,350,30,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420" FontFamily="Corbel Light" FontSize="15" VerticalContentAlignment="Center" BorderBrush="#FFB6B6B6"  Visibility="Hidden" />
+        <PasswordBox x:Name="pswPassword2" HorizontalAlignment="Center" Height="25" Margin="0,350,30,0" VerticalAlignment="Top" Width="420" FontFamily="Corbel Light" FontSize="15" VerticalContentAlignment="Center" BorderBrush="#FFB6B6B6" KeyDown="Invio2" />
+        <Button x:Name="btnShowPassword2" HorizontalAlignment="Right" Margin="0,355,210,0" VerticalAlignment="Top" Width="25" Height="15" FontFamily="Corbel Light" Click="ShowPassword2" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="eye.png"/>
+            </Button.Background>
+            <Button.Style>
+                <Style>
+                    <Setter Property="Button.Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                    <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</Window>
